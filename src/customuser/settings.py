@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Custom user
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
@@ -46,6 +47,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
 
+    # Swagger
+    'drf_yasg',
+
+    # Apps
     'users',
 ]
 
