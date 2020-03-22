@@ -1,10 +1,10 @@
 from allauth.account.views import confirm_email
 from django.conf.urls import url
 from django.urls import include
-from rest_auth.views import PasswordResetView, PasswordResetConfirmView, UserDetailsView, PasswordChangeView
+from rest_auth.views import PasswordResetView, PasswordResetConfirmView, UserDetailsView
 from rest_framework import routers
 
-from users.views import CustomLoginView, CustomLogoutView
+from users.views import CustomLoginView, CustomLogoutView, CustomPasswordChangeView
 
 router = routers.DefaultRouter()
 urlpatterns = [
@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^login/$', CustomLoginView.as_view(), name='rest_login'),
     url(r'^logout/$', CustomLogoutView.as_view(), name='rest_logout'),
     url(r'^user/$', UserDetailsView.as_view(), name='rest_user_details'),
-    url(r'^password/change/$', PasswordChangeView.as_view(), name='rest_password_change'),
+    url(r'^password/change/$', CustomPasswordChangeView.as_view(), name='rest_password_change'),
 
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^account/', include('allauth.urls')),
