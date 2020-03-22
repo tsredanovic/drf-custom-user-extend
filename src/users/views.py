@@ -8,11 +8,12 @@ from rest_auth.registration.views import RegisterView, VerifyEmailView
 from rest_auth.serializers import TokenSerializer
 from rest_auth.views import LoginView, PasswordChangeView
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.api.serializers import CustomRegisterSerializer
+from users.api.serializers import CustomRegisterSerializer, CustomUserDetailsSerializer
 
 
 class CustomLoginView(LoginView):
@@ -151,3 +152,29 @@ class CustomVerifyEmailView(VerifyEmailView):
     )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
+
+
+class CustomUserDetailsView(RetrieveAPIView):
+    serializer_class = CustomUserDetailsSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user
+
+    @swagger_auto_schema(
+        operation_id='user_read',
+        operation_description=
+        """
+        Reads UserModel fields.
+
+        Display fields: id, email
+
+        Returns UserModel fields.
+        """,
+        operation_summary=
+        """
+        Reads UserModel fields.
+        """,
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)

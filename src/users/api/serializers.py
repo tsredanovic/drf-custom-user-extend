@@ -14,7 +14,7 @@ from users.models import CustomUser
 UserModel = get_user_model()
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class CustomUserDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
