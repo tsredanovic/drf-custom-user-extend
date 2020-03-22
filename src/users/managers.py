@@ -1,3 +1,4 @@
+from allauth.account.models import EmailAddress
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 
@@ -19,6 +20,10 @@ class CustomUserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save()
+
+        # After creation also confirm his email (optional)
+        EmailAddress.objects.create(user=user, email=email, primary=True, verified=True)
+
         return user
 
     def create_user(self, email, password, **extra_fields):
