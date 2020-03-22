@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Apps
+    'users',
+
     # Custom user
     'rest_framework',
     'rest_framework.authtoken',
@@ -49,9 +52,6 @@ INSTALLED_APPS = [
 
     # Swagger
     'drf_yasg',
-
-    # Apps
-    'users',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +150,8 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
 
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.api.serializers.CustomUserSerializer',
+    'LOGIN_SERIALIZER': 'users.api.serializers.CustomLoginSerializer',
+}
