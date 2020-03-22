@@ -4,12 +4,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_auth.registration.views import RegisterView, VerifyEmailView
 from rest_auth.serializers import TokenSerializer
 from rest_auth.views import LoginView, PasswordChangeView
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from users.api.serializers import CustomRegisterSerializer
 
 
 class CustomLoginView(LoginView):
@@ -41,12 +44,6 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(APIView):
-    """
-    Calls Django logout method and deletes the Token object
-    assigned to the current User object.
-
-    Accepts/Returns nothing.
-    """
     permission_classes = (AllowAny,)
 
     @swagger_auto_schema(
@@ -56,7 +53,8 @@ class CustomLogoutView(APIView):
         Calls Django logout method and deletes the Token object
         assigned to the current User object.
 
-        Accepts/Returns nothing.
+        Accepts nothing.
+        Returns ok.
         """,
         operation_summary=
         """
@@ -65,7 +63,7 @@ class CustomLogoutView(APIView):
         """,
         responses={
             200:
-                openapi.Response('Nothing.')
+                openapi.Response('Ok.')
         }
     )
     def post(self, request, *args, **kwargs):
@@ -92,7 +90,7 @@ class CustomPasswordChangeView(PasswordChangeView):
         Calls Django Auth SetPasswordForm save method.
 
         Accepts the following POST parameters: old_password, new_password1, new_password2
-        Returns nothing.
+        Returns ok.
         """,
         operation_summary=
         """
@@ -100,7 +98,55 @@ class CustomPasswordChangeView(PasswordChangeView):
         """,
         responses={
             200:
-                openapi.Response('Nothing.')
+                openapi.Response('Ok.')
+        }
+    )
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+
+class CustomRegisterView(RegisterView):
+    serializer_class = CustomRegisterSerializer
+
+    @swagger_auto_schema(
+        operation_id='registration',
+        operation_description=
+        """
+        Registers a user.
+
+        Accepts the following POST parameters: email, password1, password2
+        Returns ok.
+        """,
+        operation_summary=
+        """
+        Registers a user.
+        """,
+        responses={
+            200:
+                openapi.Response('Ok.')
+        }
+    )
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+
+class CustomVerifyEmailView(VerifyEmailView):
+    @swagger_auto_schema(
+        operation_id='registration_verify_email',
+        operation_description=
+        """
+        Verifies registered user's email.
+
+        Accepts the following POST parameters: key
+        Returns ok.
+        """,
+        operation_summary=
+        """
+        Verifies registered user's email.
+        """,
+        responses={
+            200:
+                openapi.Response('Ok.')
         }
     )
     def post(self, request, *args, **kwargs):
