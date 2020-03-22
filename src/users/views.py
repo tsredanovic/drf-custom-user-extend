@@ -22,4 +22,4 @@ class CustomLoginView(LoginView):
         }
     )
     def post(self, request, *args, **kwargs):
-        super().post(request, *args, **kwargs)
+        return super().post(request, *args, **kwargs)
