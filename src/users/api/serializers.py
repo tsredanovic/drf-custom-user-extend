@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
-from rest_framework import serializers, exceptions
 from django.utils.translation import ugettext_lazy as _
+from rest_framework import serializers, exceptions
 
 from users.models import CustomUser
 
