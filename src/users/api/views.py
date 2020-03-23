@@ -6,7 +6,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_auth.registration.views import RegisterView, VerifyEmailView
 from rest_auth.serializers import TokenSerializer
-from rest_auth.views import LoginView, PasswordChangeView
+from rest_auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -178,3 +178,49 @@ class CustomUserDetailsView(RetrieveAPIView):
     )
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
+
+
+class CustomPasswordResetView(PasswordResetView):
+    @swagger_auto_schema(
+        operation_id='password_reset',
+        operation_description=
+        """
+        Requests a password reset.
+
+        Accepts the following POST parameters: email
+        Returns ok.
+        """,
+        operation_summary=
+        """
+        Requests a password reset.
+        """,
+        responses={
+            200:
+                openapi.Response('Ok.')
+        }
+    )
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    @swagger_auto_schema(
+        operation_id='password_reset_confirm',
+        operation_description=
+        """
+        Confirms a password reset.
+
+        AAccepts the following POST parameters: token, uid, new_password1, new_password2
+        Returns ok.
+        """,
+        operation_summary=
+        """
+        Confirms a password reset.
+        """,
+        responses={
+            200:
+                openapi.Response('Ok.')
+        }
+    )
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
