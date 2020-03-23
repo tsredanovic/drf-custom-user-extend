@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^account/', include('allauth.urls')),
     url(r'^accounts-rest/registration/account-confirm-email/(?P<key>.+)/$', confirm_email,
         name='account_confirm_email'),
+
+    url(r'^', include('django.contrib.auth.urls'))
 ]

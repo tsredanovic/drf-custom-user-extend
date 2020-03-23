@@ -1,0 +1,10 @@
+Hello from {{ current_site }}!
+
+To verify your account please make a following request:
+
+POST to {{ verify_email_endpoint }} with JSON body
+{
+  "key": "{{ key }}"
+}
+
+And lets start designating hitters!
