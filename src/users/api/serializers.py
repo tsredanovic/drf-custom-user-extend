@@ -4,6 +4,7 @@ from allauth.utils import email_address_exists
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model
 from django.utils.translation import ugettext_lazy as _
+from rest_auth.serializers import PasswordResetSerializer
 from rest_framework import serializers, exceptions
 
 from allauth.account import app_settings as allauth_settings
@@ -102,3 +103,11 @@ class CustomRegisterSerializer(serializers.Serializer):
         self.custom_signup(request, user)
         setup_user_email(request, user, [])
         return user
+
+
+class CustomPasswordResetSerializer(PasswordResetSerializer):
+    def get_email_options(self):
+        return {
+            'subject_template_name': 'account/email/password_reset_key_message.txt',
+            'email_template_name': 'account/email/password_reset_key_message.txt'
+        }
