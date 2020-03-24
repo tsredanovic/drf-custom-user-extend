@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class CustomUserManager(BaseUserManager):
     """
-    Custom user model manager where email is the unique identifiers
+    Custom user model manager where email is the unique identifier
     for authentication instead of username.
     """
 
@@ -41,4 +41,3 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(email, password, **extra_fields)
-
