@@ -6,7 +6,7 @@ from users.models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     def save(self, commit=True):
-        user = super().save(commit=commit)
+        user = super().save(commit=True)
 
         EmailAddress.objects.create(user=user, email=user.email, primary=True, verified=True)
 
@@ -19,11 +19,12 @@ class CustomUserCreationForm(UserCreationForm):
 
 class CustomUserChangeForm(UserChangeForm):
     def save(self, commit=True):
-        user = super().save(commit=commit)
+        user = super().save(commit=False)
 
         email_address = EmailAddress.objects.filter(user=user).first()
-        email_address.email = user.email
-        email_address.save()
+        if email_address.email != user.email:
+            email_address.email = user.email
+            email_address.save()
 
         return user
 
