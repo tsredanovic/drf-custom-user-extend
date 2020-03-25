@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth.registration',
 
+    # Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
