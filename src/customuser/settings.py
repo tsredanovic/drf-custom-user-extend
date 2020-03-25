@@ -137,6 +137,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Custom user
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -153,7 +156,6 @@ ACCOUNT_ADAPTER = 'users.adapters.CustomAccountAdapter'
 OLD_PASSWORD_FIELD_ENABLED = True
 
 SITE_ID = 1
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'users.api.serializers.CustomUserDetailsSerializer',
