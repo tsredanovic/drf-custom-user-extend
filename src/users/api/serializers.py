@@ -9,7 +9,6 @@ from rest_framework import serializers, exceptions
 
 from allauth.account import app_settings as allauth_settings
 
-from users.models import CustomUser
 
 # Get the UserModel
 UserModel = get_user_model()
@@ -18,8 +17,9 @@ UserModel = get_user_model()
 class CustomUserDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = CustomUser
-        fields = ['id', 'email']
+        model = UserModel
+        fields = ('id', 'email', 'name')
+        read_only_fields = ('email', )
 
 
 class CustomLoginSerializer(serializers.Serializer):

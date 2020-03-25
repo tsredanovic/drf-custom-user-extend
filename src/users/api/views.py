@@ -6,9 +6,8 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_auth.registration.views import RegisterView, VerifyEmailView
 from rest_auth.serializers import TokenSerializer
-from rest_auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+from rest_auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView, UserDetailsView
 from rest_framework import status
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -154,32 +153,6 @@ class CustomVerifyEmailView(VerifyEmailView):
         return super().post(request, *args, **kwargs)
 
 
-class CustomUserDetailsView(RetrieveAPIView):
-    serializer_class = CustomUserDetailsSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def get_object(self):
-        return self.request.user
-
-    @swagger_auto_schema(
-        operation_id='user_read',
-        operation_description=
-        """
-        Reads UserModel fields.
-
-        Display fields: id, email
-
-        Returns UserModel fields.
-        """,
-        operation_summary=
-        """
-        Reads UserModel fields.
-        """,
-    )
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
-
-
 class CustomPasswordResetView(PasswordResetView):
     @swagger_auto_schema(
         operation_id='password_reset',
@@ -224,3 +197,60 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
+
+
+class CustomUserDetailsView(UserDetailsView):
+    @swagger_auto_schema(
+        operation_id='user_read',
+        operation_description=
+        """
+        Reads UserModel fields.
+
+        Display fields: id, email, name
+
+        Returns UserModel fields.
+        """,
+        operation_summary=
+        """
+        Reads UserModel fields.
+        """,
+    )
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_id='user_update',
+        operation_description=
+        """
+        Updates UserModel fields.
+
+        Updates fields: name
+
+        Returns UserModel fields.
+        """,
+        operation_summary=
+        """
+        Updates UserModel fields.
+        """,
+    )
+    def put(self, request, *args, **kwargs):
+        return super().put(request, *args, **kwargs)
+
+
+    @swagger_auto_schema(
+        operation_id='user_partial_update',
+        operation_description=
+        """
+        Partially updates UserModel fields.
+
+        Updates fields: name
+
+        Returns UserModel fields.
+        """,
+        operation_summary=
+        """
+        Partially updates UserModel fields.
+        """,
+    )
+    def patch(self, request, *args, **kwargs):
+        return super().patch(request, *args, **kwargs)
