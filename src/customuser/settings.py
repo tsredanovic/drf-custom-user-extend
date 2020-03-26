@@ -31,15 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # Custom user
-    'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-
     # Django
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    # Rest framework
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    # Rest auth
+    'rest_auth',
+    'rest_auth.registration',
+
+    # Allauth
+    'allauth',
+    'allauth.account',
 
     # Apps
     'users',

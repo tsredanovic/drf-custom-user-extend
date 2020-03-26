@@ -1,11 +1,10 @@
 from allauth.account.views import email_verification_sent
 from django.conf.urls import url
 from django.urls import path
-from rest_framework import routers
 
 from users.api.views import *
 
-router = routers.DefaultRouter()
+
 urlpatterns = [
     # Login, Logout
     url(r'^login/$', CustomLoginView.as_view(), name='rest_login'),

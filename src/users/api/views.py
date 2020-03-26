@@ -236,7 +236,6 @@ class CustomUserDetailsView(UserDetailsView):
     def put(self, request, *args, **kwargs):
         return super().put(request, *args, **kwargs)
 
-
     @swagger_auto_schema(
         operation_id='user_partial_update',
         operation_description=
